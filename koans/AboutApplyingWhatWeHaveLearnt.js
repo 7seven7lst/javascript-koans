@@ -86,15 +86,24 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
+    // first use chain()
+    // then for each products, only keep/map its ingredients
+    // then use reduce, but modify the body to store the count, and no need to return the accumulation
+    _(products).chain().map(function(x){
+      return x.ingredients;
+    }).flatten().reduce(function(total, cur){
+      ingredientCount[cur]=(ingredientCount[cur] ||0)+1;
+      return total; // total is useless here, work done on previous line
+    },0);
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
